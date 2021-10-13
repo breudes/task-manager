@@ -2,18 +2,61 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
-<head>
+<h:head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>Form - Task</title>
-</head>
+</h:head>
 
 <h:body>
 	<h:form>
 		<p:panel header="Tasks">
+			<!-- Message card body -->
 			<p:messages closable="true">
 				<p:autoUpdate /> 
 			</p:messages>
+			
+			<!-- Start - Form card body -->
+			<h:panelGrid columns="12">
+				<p:outputLabel hidden="true" value="#{taskBean.task.id}"></p:outputLabel>
+				
+				<p:outputLabel>Title</p:outputLabel>
+				<p:inputText value="#{taskBean.task.title}"></p:inputText>
+			</h:panelGrid>	
+			
+			<h:panelGrid columns="12">
+				<p:outputLabel>Description</p:outputLabel>
+				<p:inputTextarea value="#{taskBean.task.description}"></p:inputTextarea>
+			</h:panelGrid>
+			
+			<h:panelGrid columns="12">
+				<p:outputLabel>Employee</p:outputLabel>
+				<p:selectOneMenu id="optionEmployee" value="#{taskBean.task.employee}">
+                    <f:selectItem itemLabel="--- Select an employee ---" itemValue=""/>
+                    <f:selectItems value="#{taskBean.employees}" var="employee" itemLabel="#{employee.name}" itemValue="#{employee}"/>
+                </p:selectOneMenu>
+                
+				<p:outputLabel>Priority</p:outputLabel>
+				<p:selectOneMenu id="optionPriority" value="#{taskBean.task.priority}">
+                    <f:selectItem itemLabel="--- Select a priority ---" itemValue=""/>
+                    <f:selectItems value="#{taskBean.priorities}" var="priority" itemLabel="#{priority.description}" itemValue="#{priority}"/>
+                </p:selectOneMenu>
+			</h:panelGrid>
+			
+			<h:panelGrid columns="12">
+				<p:outputLabel>Deadline</p:outputLabel>
+				<p:datePicker id="basic" value="#{taskBean.task.deadline}" />
+				
+				<p:outputLabel>Status</p:outputLabel>
+				<p:selectOneMenu id="optionStatus" value="#{taskBean.task.status}">
+                    <f:selectItem itemLabel="--- Select a status ---" itemValue=""/>
+                    <f:selectItems value="#{taskBean.listStatus}" var="status" itemLabel="#{status.description}" itemValue="#{status}"/>
+                </p:selectOneMenu>
+                
+			</h:panelGrid>
+			<!-- End - Form card body -->
+			
 		</p:panel>
 	</h:form>
 </h:body>
