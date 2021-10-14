@@ -11,7 +11,7 @@
 
 <h:body>
 	<h:form>
-		<p:panel header="Tasks">
+		<p:panel header="Task">
 			<!-- Message card body -->
 			<p:messages closable="true">
 				<p:autoUpdate /> 
@@ -36,24 +36,21 @@
                     <f:selectItem itemLabel="--- Select an employee ---" itemValue=""/>
                     <f:selectItems value="#{taskBean.employees}" var="employee" itemLabel="#{employee.name}" itemValue="#{employee}"/>
                 </p:selectOneMenu>
-                
+			</h:panelGrid>
+			
+			<h:panelGrid columns="12">
 				<p:outputLabel>Priority</p:outputLabel>
 				<p:selectOneMenu id="optionPriority" value="#{taskBean.task.priority}">
                     <f:selectItem itemLabel="--- Select a priority ---" itemValue=""/>
                     <f:selectItems value="#{taskBean.priorities}" var="priority" itemLabel="#{priority.description}" itemValue="#{priority}"/>
                 </p:selectOneMenu>
+			
+				<p:outputLabel>Deadline</p:outputLabel>
+				<p:datePicker id="basic" value="#{taskBean.task.deadline}" />
 			</h:panelGrid>
 			
 			<h:panelGrid columns="12">
-				<p:outputLabel>Deadline</p:outputLabel>
-				<p:datePicker id="basic" value="#{taskBean.task.deadline}" />
-				
-				<p:outputLabel>Status</p:outputLabel>
-				<p:selectOneMenu id="optionStatus" value="#{taskBean.task.status}">
-                    <f:selectItem itemLabel="--- Select a status ---" itemValue=""/>
-                    <f:selectItems value="#{taskBean.listStatus}" var="status" itemLabel="#{status.description}" itemValue="#{status}"/>
-                </p:selectOneMenu>
-                
+				<p:commandButton value="Save" actionListener="#{taskBean.saveTask()}"></p:commandButton>
 			</h:panelGrid>
 			<!-- End - Form card body -->
 			

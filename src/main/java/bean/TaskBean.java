@@ -1,4 +1,4 @@
-package bean.bean;
+package bean;
 
 import java.io.Serializable;
 import java.util.List;
@@ -9,6 +9,7 @@ import javax.inject.Named;
 
 import org.omnifaces.util.Messages;
 
+import dao.EmployeeDAO;
 import dao.TaskDAO;
 import domain.Employee;
 import domain.Task;
@@ -24,6 +25,7 @@ public class TaskBean implements Serializable{
 	private Task task;
 	private List<Task> tasks;
 	private TaskDAO taskDAO;
+	private EmployeeDAO employeeDAO;
 	
 	private List<Employee> employees;
 	private PriorityEnum[] priorities;
@@ -32,16 +34,18 @@ public class TaskBean implements Serializable{
 	public TaskBean() {
 	}
 	
-	public TaskBean(Task task, TaskDAO taskDAO) {
+	public TaskBean(Task task, TaskDAO taskDAO, EmployeeDAO employeeDAO) {
 		this.task = task;
 		this.taskDAO = taskDAO;
+		this.employeeDAO = employeeDAO;
 	}
-	
-	public TaskBean(Task task, List<Task> tasks, TaskDAO taskDAO, List<Employee> employees, PriorityEnum[] priorities,
-			StatusEnum[] listStatus) {
+
+	public TaskBean(Task task, List<Task> tasks, TaskDAO taskDAO, EmployeeDAO employeeDAO, List<Employee> employees,
+			PriorityEnum[] priorities, StatusEnum[] listStatus) {
 		this.task = task;
 		this.tasks = tasks;
 		this.taskDAO = taskDAO;
+		this.employeeDAO = employeeDAO;
 		this.employees = employees;
 		this.priorities = priorities;
 		this.listStatus = listStatus;
@@ -99,15 +103,22 @@ public class TaskBean implements Serializable{
 	public void init() {
 		this.task = new Task();
 		this.taskDAO = new TaskDAO();
+		this.employeeDAO = new EmployeeDAO();
 		
 		this.priorities = PriorityEnum.values();
 		this.listStatus = StatusEnum.values();
+		this.employees = employeeDAO.listEmployee();
+		
+		listAllTasks();
 	}
 	
 	public void saveTask() {
+		task.setStatus(StatusEnum.IN_PROGRESS);
 		taskDAO.insertTask(task);
 		
 		Messages.addGlobalInfo("Task saved successfully!");
+		
+		listAllTasks();
 	}
 	
 	public void deleteTask() {
@@ -115,6 +126,6 @@ public class TaskBean implements Serializable{
 	}
 	
 	public void listAllTasks() {
-		
+		this.tasks = taskDAO.listTask();
 	}
 }

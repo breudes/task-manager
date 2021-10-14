@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
@@ -49,7 +51,10 @@ public class TaskDAO {
 		
 	}
 	
-	public void listTask() {
+	@SuppressWarnings("unchecked")
+	public List<Task> listTask() {
+		EntityManager manager = JPAUtil.getEntityManager();
 		
+        return manager.createQuery("select t from Task t order by id").getResultList();
 	}
 }

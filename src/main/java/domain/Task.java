@@ -37,7 +37,7 @@ public class Task {
 	@Column(name="deadline", nullable = false)
 	private LocalDate deadline;
 	
-	@Column(name="deadline", nullable = false)
+	@Column(name="status", nullable = false)
 	private StatusEnum status;
 
 	public Task() {
