@@ -13,7 +13,7 @@ public class TaskDAO {
 	public TaskDAO() {
 	}
 	
-	public void insertTask(Task task) {
+	public boolean insertTask(Task task) {
 		EntityManager manager = JPAUtil.getEntityManager();
         EntityTransaction transaction = manager.getTransaction();
 
@@ -22,13 +22,14 @@ public class TaskDAO {
             manager.persist(task);
             transaction.commit();
             manager.close();
-            
+            return true;
         } catch(Exception e) {
         	e.printStackTrace();
         }
+        return false;
 	}
 	
-	public Task updateTask(Long id, Task task) {
+	public Task updateTask(Task task) {
 		 EntityManager manager = JPAUtil.getEntityManager();
 	     EntityTransaction transaction = manager.getTransaction();
 	     Task taskResult;
@@ -38,7 +39,6 @@ public class TaskDAO {
 	    	 taskResult = manager.merge(task);
 		     transaction.commit();
 		     manager.close();
-		     
 		     return taskResult;
 	     } catch(Exception e) {
 	    	 e.printStackTrace();
@@ -47,14 +47,31 @@ public class TaskDAO {
 	     return null;
 	}
 	
-	public void deleteTask(Long id) {
-		
+	public boolean deleteTask(Task task) {
+		EntityManager manager = JPAUtil.getEntityManager();
+	    EntityTransaction transaction = manager.getTransaction();
+
+	    try {
+	    	transaction.begin();
+	    	manager.remove(manager.find(Task.class,task.getId()));
+		    transaction.commit();
+		    manager.close();
+		  
+		    return true;
+	    } catch(Exception e) {
+	    	 e.printStackTrace();
+	    }
+	    return false;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public List<Task> listTask() {
 		EntityManager manager = JPAUtil.getEntityManager();
-		
-        return manager.createQuery("select t from Task t order by id").getResultList();
+        return manager.createQuery("SELECT t FROM Task t ORDER BY id").getResultList();
+	}
+	
+	public Task getTask(Long id) {
+		EntityManager sessao = JPAUtil.getEntityManager();
+		return sessao.find(Task.class, id);
 	}
 }

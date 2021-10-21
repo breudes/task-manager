@@ -41,6 +41,7 @@ public class Task {
 	private StatusEnum status;
 
 	public Task() {
+		status = StatusEnum.IN_PROGRESS;
 	}
 
 	public Task(Long id, String title, String description, Employee employee, PriorityEnum priority, LocalDate deadline,

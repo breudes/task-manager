@@ -26,7 +26,7 @@ public class TaskBean implements Serializable{
 	private List<Task> tasks;
 	private TaskDAO taskDAO;
 	private EmployeeDAO employeeDAO;
-	
+		
 	private List<Employee> employees;
 	private PriorityEnum[] priorities;
 	private StatusEnum[] listStatus;
@@ -112,17 +112,62 @@ public class TaskBean implements Serializable{
 		listAllTasks();
 	}
 	
-	public void saveTask() {
-		task.setStatus(StatusEnum.IN_PROGRESS);
-		taskDAO.insertTask(task);
-		
-		Messages.addGlobalInfo("Task saved successfully!");
-		
+	public void refreshData() {
+		task = new Task();
 		listAllTasks();
 	}
 	
-	public void deleteTask() {
+	public void saveTask() {
+		task.setStatus(StatusEnum.IN_PROGRESS);
+		boolean result = taskDAO.insertTask(task);
 		
+		if(result) {
+			Messages.addGlobalInfo("Task saved successfully!");
+		} else {
+			Messages.addGlobalInfo("Error entering task!");
+		}
+		
+		refreshData();
+	}
+	
+	public void updateTask(Task currentTask) {
+		task = currentTask;
+		Task result = taskDAO.updateTask(task);
+		
+		if(result!=null) {
+			Messages.addGlobalInfo("Task updated successfully!");
+		} else {
+			Messages.addGlobalInfo("Error while updating task!");
+		}
+		
+		refreshData();
+	}
+	
+	public void concludeTask(Task currentTask) {
+		task = currentTask;
+		task.setStatus(StatusEnum.CONCLUDED);
+		Task result = taskDAO.updateTask(task);
+		
+		if(result!=null) {
+			Messages.addGlobalInfo("Task concluded successfully!");
+		} else {
+			Messages.addGlobalInfo("Error while completing task!");
+		}
+		
+		refreshData();
+	}
+	
+	public void deleteTask(Task currentTask) {	
+		task = currentTask;
+		boolean result = taskDAO.deleteTask(task);
+		
+		if(result) {
+			Messages.addGlobalInfo("Task deleted successfully!");
+		} else {
+			Messages.addGlobalInfo("Error removing task!");
+		}
+		
+		refreshData();
 	}
 	
 	public void listAllTasks() {

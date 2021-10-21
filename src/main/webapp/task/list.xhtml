@@ -10,19 +10,25 @@
 </h:head>
 
 <h:body>
-		<p:panel header="Tasks">
-			<p:dataTable emptyMessage="There is not tasks available." paginator="true" value="#{taskBean.tasks}"
-				var="task">
-				<p:column headerText="#">#{task.id}</p:column>
-				<p:column headerText="Title">#{task.title}</p:column>
-				<p:column headerText="Employee">#{task.employee.name}</p:column>
-				<p:column headerText="Options">
-					<p:commandButton value="Edit" actionListener="#"></p:commandButton>
-					<p:commandButton value="Delete" actionListener="#"></p:commandButton>
-					<p:commandButton value="Conclude" actionListener="#"></p:commandButton>
-				</p:column>
-			</p:dataTable>
-		</p:panel>
+		<!-- Message card body -->
+		<p:messages closable="true">
+			<p:autoUpdate /> 
+		</p:messages>
+			
+		<h:form>
+			<p:panel header="Tasks">
+				<p:dataTable emptyMessage="There is not tasks available." paginator="true" value="#{taskBean.tasks}" var="task" id="tasks-list">
+					<p:column headerText="#">#{task.id}</p:column>
+					<p:column headerText="Title">#{task.title}</p:column>
+					<p:column headerText="Employee">#{task.employee.name}</p:column>
+					<p:column headerText="Options">
+						<p:commandButton value="Edit" actionListener="#{taskBean.updateTask(task)}" update="tasks-list"></p:commandButton>
+						<p:commandButton value="Delete" actionListener="#{taskBean.deleteTask(task)}" update="tasks-list"></p:commandButton>
+						<p:commandButton value="Conclude" actionListener="#{taskBean.concludeTask(task)}" update="tasks-list"></p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</h:form>
 </h:body>
 
 </html>

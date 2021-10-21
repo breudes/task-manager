@@ -17,7 +17,7 @@ import javax.persistence.Table;
 public class Employee {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 	
 	@Column(name="name", nullable = false, length=50)
 	private String name;
@@ -34,7 +34,7 @@ public class Employee {
 	public Employee() {
 	}
 
-	public Employee(Integer id, String name, LocalDate birthDate, String role, List<Task> tasks) {
+	public Employee(Long id, String name, LocalDate birthDate, String role, List<Task> tasks) {
 		this.id = id;
 		this.name = name;
 		this.birthDate = birthDate;
@@ -42,18 +42,18 @@ public class Employee {
 		this.tasks = tasks;
 	}
 
-	public Employee(Integer id, String name, LocalDate birthDate, String role) {
+	public Employee(Long id, String name, LocalDate birthDate, String role) {
 		this.id = id;
 		this.name = name;
 		this.birthDate = birthDate;
 		this.role = role;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -91,8 +91,7 @@ public class Employee {
 
 	@Override
 	public String toString() {
-		return "Employee [id=" + id + ", name=" + name + ", birthDate=" + birthDate + ", role=" + role + ", tasks="
-				+ tasks + "]";
+		return "Employee [id=" + id + ", name=" + name + ", birthDate=" + birthDate + ", role=" + role + ", tasks.size()=" + tasks.size() + "]";
 	}
 	
 }

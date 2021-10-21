@@ -32,9 +32,9 @@
 			
 			<h:panelGrid columns="12">
 				<p:outputLabel>Employee</p:outputLabel>
-				<p:selectOneMenu id="optionEmployee" value="#{taskBean.task.employee}">
+				<p:selectOneMenu id="optionEmployee" value="#{taskBean.task.employee}" converter="omnifaces.SelectItemsConverter">
                     <f:selectItem itemLabel="--- Select an employee ---" itemValue=""/>
-                    <f:selectItems value="#{taskBean.employees}" var="employee" itemLabel="#{employee.name}" itemValue="#{employee}"/>
+                    <f:selectItems value="#{taskBean.employees}" var="employee" itemLabel="#{employee.id} - #{employee.name}" itemValue="#{employee}"/>
                 </p:selectOneMenu>
 			</h:panelGrid>
 			
@@ -53,7 +53,6 @@
 				<p:commandButton value="Save" actionListener="#{taskBean.saveTask()}"></p:commandButton>
 			</h:panelGrid>
 			<!-- End - Form card body -->
-			
 		</p:panel>
 	</h:form>
 </h:body>
